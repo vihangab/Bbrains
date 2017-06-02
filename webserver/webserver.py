@@ -1,8 +1,4 @@
-# Author  : Foram Shah foram.shah@colorado.edu
-# Name    : webserverold.py
-# Purpose : HTTP Webserver
-# Date    : 10.16.16
-# Version : 2.1
+##Author:Vihanga Bare##
 
 import socket
 import os
