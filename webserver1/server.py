@@ -20,12 +20,12 @@ with open('data.json', 'r') as f:
     json_data = json.load(f)
     pprint(json_data)
 
-    sql_create_data_table = """CREATE TABLE IF NOT EXISTS data (
+sql_create_data_table = """CREATE TABLE IF NOT EXISTS data (
 				id integer PRIMARY KEY, 
 				name text NOT NULL, 
 				date text NOT NULL);"""   
     
-    sql_insert_value = """INSERT INTO data (
+sql_insert_value = """INSERT INTO data (
 			id,
 			name,
 			date) 
@@ -34,15 +34,15 @@ with open('data.json', 'r') as f:
                         ?,
                         ?);"""
     
-    sql_del_value = """DELETE 
+sql_del_value = """DELETE 
                       FROM 
                       data 
                       WHERE 
                       name = 'Aryan';"""
 
-    sql_disp_value = """SELECT * FROM data ORDER BY id;"""
+sql_disp_value = """SELECT * FROM data ORDER BY id;"""
 
-    sql_updt_value = """UPDATE data
+sql_updt_value = """UPDATE data
 			SET name = ?
 			WHERE 
 			 id = ?;"""
@@ -91,7 +91,7 @@ class Server:
     def run(self):
 	self.open_socket()
 	while True: 
-	    self.server.listen(1)
+	    self.server.listen(600)
     	    print "Multithreaded Python server : Waiting for connections from TCP clients..." 
     	    (connection, (ip,port)) = self.server.accept() 
     	    newthread = RequestThread(ip,port,connection) 
@@ -170,11 +170,11 @@ def update_values(connect,sql_updt_value):
 
 def database_tasks(message):
     try:
-    database = 'pythonsqlite.db'
-    # create database connection #
-    conn = create_connection(database)
+	database = 'pythonsqlite.db'
+    	# create database connection #
+    	conn = create_connection(database)
 
-    if conn is not None:
+    	if conn is not None:
     	
         #create_table(conn,sql_create_data_table)
 	#insert_values(conn,sql_insert_value)
@@ -183,22 +183,24 @@ def database_tasks(message):
         #update_values(conn,sql_updt_value)
         #s = Server()
         #s.run(conn)
-	if message == 'create':
-	    create_table(conn,sql_create_data_table)
+	    if message == 'create':
+	        create_table(conn,sql_create_data_table)
 
-        elif message == 'insert':
-	    insert_values(conn,sql_insert_value)
+            elif message == 'insert':
+	        insert_values(conn,sql_insert_value)
 
-        elif message == 'update':
-            update_values(conn,sql_updt_value)
+            elif message == 'update':
+                update_values(conn,sql_updt_value)
 
-        elif message == 'delete':
-            delete_values(conn,sql_del_value)
+            elif message == 'delete':
+                delete_values(conn,sql_del_value)
 
+            else:
+                display_values(conn,sql_disp_value)
         else:
-            display_values(conn,sql_disp_value)
-    else:
-        print("Error! cannot create database connection")
+            print("Error! cannot create database connection")
+    except:
+        print("error")
 
 def Main():
     s = Server()
