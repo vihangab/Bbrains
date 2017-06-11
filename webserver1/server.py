@@ -141,7 +141,7 @@ def delete_values(connect,sql_del_value):
     # insert values into table by sql statement #
     try:
 	c = connect.cursor()
-	c.execute(sql_del_value,(json_data["data"][1]["name"]))
+	c.execute(sql_del_value,(json_data["data"][1]["name"],))
         connect.commit()
 	
     except Error as e:
