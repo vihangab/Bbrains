@@ -51,12 +51,12 @@ with open('data.json', 'r') as f:
 # New thread created for evry connection #
 class RequestThread(Thread): 
  
-    def __init__(self,ip,port,connection,conn): 
+    def __init__(self,ip,port,connection): 
         Thread.__init__(self) 
         self.connection = connection
 	self.ip = ip 
         self.port = port 
-	self.conn = conn
+	#self.conn = conn
         print "[+] New server socket thread started for " + ip + ":" + str(port) 
  
     def run(self): 
@@ -66,19 +66,8 @@ class RequestThread(Thread):
             MESSAGE = raw_input("Multithreaded Python server : Enter Response from Server/Enter exit:")
             if MESSAGE == 'exit':
                 break
-	    elif data == 'create':
-		create_table(self.conn,sql_create_data_table)
-	    elif data == 'insert':
-		insert_values(self.conn,sql_insert_value)
-	    elif data == 'update':
-            	update_values(self.conn,sql_updt_value)
-            elif data == 'delete':
-                delete_values(self.conn,sql_del_value)
-            else:
-                display_values(self.conn,sql_disp_value)
-	    
             self.connection.send(MESSAGE)  # echo 
- 
+	    database_tasks(data) 
  
 class Server:
     def __init__(self):
@@ -99,13 +88,13 @@ class Server:
 	    print("Socket Error:"+e.message)
 	    sys.exit(1)
 
-    def run(self,conn):
+    def run(self):
 	self.open_socket()
 	while True: 
 	    self.server.listen(1)
     	    print "Multithreaded Python server : Waiting for connections from TCP clients..." 
     	    (connection, (ip,port)) = self.server.accept() 
-    	    newthread = RequestThread(ip,port,connection,conn) 
+    	    newthread = RequestThread(ip,port,connection) 
     	    newthread.start() 
             self.threads.append(newthread) 
  
@@ -179,11 +168,11 @@ def update_values(connect,sql_updt_value):
     except Error as e:
 	print("Error in display_values :" + e.message)
 
-def Main():
+def database_tasks(message):
+    try:
     database = 'pythonsqlite.db'
     # create database connection #
     conn = create_connection(database)
-
 
     if conn is not None:
     	
@@ -192,13 +181,28 @@ def Main():
         #delete_values(conn,sql_del_value)
         #display_values(conn,sql_disp_value)
         #update_values(conn,sql_updt_value)
-        s = Server()
-        s.run(conn)
+        #s = Server()
+        #s.run(conn)
+	if message == 'create':
+	    create_table(conn,sql_create_data_table)
+
+        elif message == 'insert':
+	    insert_values(conn,sql_insert_value)
+
+        elif message == 'update':
+            update_values(conn,sql_updt_value)
+
+        elif message == 'delete':
+            delete_values(conn,sql_del_value)
+
+        else:
+            display_values(conn,sql_disp_value)
     else:
         print("Error! cannot create database connection")
-    
-    #s = Server()
-    #s.run()
+
+def Main():
+    s = Server()
+    s.run()
 
 if __name__ == "__main__":
    Main()	
