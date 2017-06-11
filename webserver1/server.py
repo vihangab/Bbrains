@@ -20,6 +20,33 @@ with open('data.json', 'r') as f:
     json_data = json.load(f)
     pprint(json_data)
 
+    sql_create_data_table = """CREATE TABLE IF NOT EXISTS data (
+				id integer PRIMARY KEY, 
+				name text NOT NULL, 
+				date text NOT NULL);"""   
+    
+    sql_insert_value = """INSERT INTO data (
+			id,
+			name,
+			date) 
+			VALUES (
+			?,
+                        ?,
+                        ?);"""
+    
+    sql_del_value = """DELETE 
+                      FROM 
+                      data 
+                      WHERE 
+                      name = 'Aryan';"""
+
+    sql_disp_value = """SELECT * FROM data ORDER BY id;"""
+
+    sql_updt_value = """UPDATE data
+			SET name = ?
+			WHERE 
+			 id = ?;"""
+
 
 # New thread created for evry connection #
 class RequestThread(Thread): 
@@ -157,32 +184,6 @@ def Main():
     # create database connection #
     conn = create_connection(database)
 
-    sql_create_data_table = """CREATE TABLE IF NOT EXISTS data (
-				id integer PRIMARY KEY, 
-				name text NOT NULL, 
-				date text NOT NULL);"""   
-    
-    sql_insert_value = """INSERT INTO data (
-			id,
-			name,
-			date) 
-			VALUES (
-			?,
-                        ?,
-                        ?);"""
-    
-    sql_del_value = """DELETE 
-                      FROM 
-                      data 
-                      WHERE 
-                      name = 'Aryan';"""
-
-    sql_disp_value = """SELECT * FROM data ORDER BY id;"""
-
-    sql_updt_value = """UPDATE data
-			SET name = ?
-			WHERE 
-			 id = ?;"""
 
     if conn is not None:
     	
