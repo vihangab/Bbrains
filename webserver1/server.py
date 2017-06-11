@@ -38,7 +38,7 @@ sql_del_value = """DELETE
                       FROM 
                       data 
                       WHERE 
-                      name = 'Aryan';"""
+                      name = ?;"""
 
 sql_disp_value = """SELECT * FROM data ORDER BY id;"""
 
@@ -141,7 +141,7 @@ def delete_values(connect,sql_del_value):
     # insert values into table by sql statement #
     try:
 	c = connect.cursor()
-	c.execute(sql_del_value)
+	c.execute(sql_del_value,json_data["data"][1]["name"])
         connect.commit()
 	
     except Error as e:
@@ -162,7 +162,7 @@ def update_values(connect,sql_updt_value):
     # update values into table by sql statement #
     try:
 	c = connect.cursor()
-	c.execute(sql_updt_value,('Vihanga',379))
+	c.execute(sql_updt_value,(json_data["data"][1]["name"],json_data["data"][1]["id"]))
         connect.commit()
 	
     except Error as e:
