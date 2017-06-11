@@ -18,6 +18,7 @@ BUFFER_SIZE = 1024 #maximum size of the buffer
 
 with open('data.json', 'r') as f:
     json_data = json.load(f)
+    print("server side json ")
     pprint(json_data)
 
 sql_create_data_table = """CREATE TABLE IF NOT EXISTS data (
@@ -195,8 +196,11 @@ def database_tasks(message):
             elif message == 'delete':
                 delete_values(conn,sql_del_value)
 
+	    elif message == 'display':
+		display_values(conn,sql_disp_value)
+
             else:
-                display_values(conn,sql_disp_value)
+		print("enter insert,update,delete,display as commands")
         else:
             print("Error! cannot create database connection")
     except:
