@@ -1,10 +1,11 @@
+#!/usr/bin/env python
 from __future__ import print_function
 import socket
 from datetime import datetime
 
 
 #replace it with aws server address
-host = "localhost"
+host = "34.229.176.201"
 port= 14000
 
 

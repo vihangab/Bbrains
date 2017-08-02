@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 from __future__ import print_function
 import socket
 from datetime import datetime
@@ -11,7 +11,7 @@ UDP_PORT = 14000
 class server:
 	def __init__(self,port_number):
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-		self.sock.bind(("localhost",port_number))
+		self.sock.bind(("",UDP_PORT))
 
 	def listen(self):
 		while True:
