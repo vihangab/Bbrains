@@ -7,7 +7,7 @@ from datetime import datetime
 host_ip =socket.gethostbyname(socket.gethostname())
 
 UDP_PORT = 14000
-
+i = 0
 
 
 class server:
@@ -20,19 +20,15 @@ class server:
 			data,addr = self.sock.recvfrom(1024)
 			if data == "TEST":
 				print(data,addr)
-				conn = sqlite3.connect("/home/ubuntu/client_info.db")
-                                curr = conn.cursor()
-                                sql=''' INSERT INTO ipaddress(ID,IP_ADDR,PORT_NO) VALUES(?,?,?) '''
-				i=0
-                                for item in addr:
-					print(item)			
+				for item in addr:
+					print(str(item[0]))
 				reply = str(datetime.now())
 				self.sock.sendto(reply,addr)
-				#conn = sqlite3.connect("/home/ubuntu/client_info.db")
-				#curr = conn.cursor()
-				#sql=''' INSERT INTO ipaddress(ID,IP_ADDR,PORT_NO) VALUES(?,?,?) '''
-				#value=(2,"0.0.0.0",2)
-				#curr.execute(sql,value)
+				conn = sqlite3.connect("/home/ubuntu/client_info.db")
+				curr = conn.cursor()
+				sql=''' INSERT INTO ipaddress(ID,IP_ADDR,PORT_NO) VALUES(?,?,?) '''
+				value=(2,"0.0.0.0",2)
+				curr.execute(sql,value)
 				break
 local_server = server(UDP_PORT)
 local_server.listen()
