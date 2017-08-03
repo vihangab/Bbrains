@@ -5,7 +5,7 @@ import sys
 
 UDP_PORT=15000
 
-sockfd = socket.socket(socket.AF_NET,socket.SOCK_DGRAM)
+sockfd = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 sockfd.bind = ('',UDP_PORT)
 print "Listening on port " + str(UDP_PORT)
 
