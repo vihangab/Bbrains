@@ -8,7 +8,7 @@ import sys
 aws_ip=("184.72.215.211",15000)
 
 try:
-    sockfd. = socket.socket(socket.AF_NET,socket.SOCK_DGRAM)
+    sockfd = socket.socket(socket.AF_NET,socket.SOCK_DGRAM)
     sockfd.bind = ('',0)
     sockfd.sento("hello",aws_ip)
 
