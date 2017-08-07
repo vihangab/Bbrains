@@ -5,7 +5,7 @@ import struct
 import time
 import sys
 
-aws_ip=("10.234.37.210",15000)
+aws_ip=("184.72.215.211",15000)
 
 try:
     sockfd = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
