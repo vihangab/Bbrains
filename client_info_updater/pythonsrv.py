@@ -6,7 +6,7 @@ import sys
 UDP_PORT=15000
 
 sockfd = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-sockfd.bind = ('',UDP_PORT)
+sockfd.bind('',UDP_PORT)
 print "Listening on port " + str(UDP_PORT)
 
 client_requests = []
@@ -15,7 +15,7 @@ while True:
     data, addr = sockfd.recvfrom(1024)
     client_requests.append(addr)
     print "Connection from " + str(addr)
-    if client_requests == 5:
+    if client_requests == 2:
 	break
 
 clientA_ip=client_requests[0][0]
