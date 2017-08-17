@@ -1,19 +1,4 @@
-#!/usr/bin/env python3
-
-###############################################################################################
-# Authors: Vihanga Bare and Virag Gada
-# File name : awsiotsub.py
-# Description : File that is using MQTT protocol to subscribe data from AWS IOT Thing
-# '/temperature'
-# Use: Use this program with AWS IoT certificates and Thing
-# keys to receive data from AWS IoT. Run using Python3.5 to support all the dependencies and
-# libraries imported
-# Program authenticates with AWS IOT thing using credentials  and subscribes data from
-# AWS IOT thing.
-# Please make sure you have Python 3.5.1 installed for all the
-# below mentioned modules to work correctly with the integrated
-# code
-##############################################################################################
+#!/usr/bin/env python
 
 import paho.mqtt.client as paho
 import os
@@ -39,22 +24,17 @@ mqttc.on_connect = on_connect
 mqttc.on_message = on_message
 #mqttc.on_log = on_log
 
-#awshost = "aekn89lpwmp2q.iot.us-west-2.amazonaws.com"
-#awsport = 8883
-#clientId = "VB_Rpi3"
-#thingName = "VB_Rpi3"
-#caPath = "root-CA.crt"
-#certPath = "VB_Rpi3.cert.pem"
-#keyPath = "VB_Rpi3.private.key"
-# AWS IOT thing credentials
-awshost = "a2vp65ivl2lw2v.iot.us-west-2.amazonaws.com"
-awsport = 8883
-clientId = "MyRPi3"
-thingName = "MyRPi3"
-caPath = "root-CA.crt"
-certPath = "MyRPi3.cert.pem"
-keyPath = "MyRPi3.private.key"
+#AWS IOT Thing security credentials
 
+#first you need to be authorised to connect to AWS IOT using access keys - AWS access key and aws secret key, which can be configured in .aws/credentials file
+ 
+awshost = "aekn89lpwmp2q.iot.us-east-1.amazonaws.com"
+awsport = 8883
+clientId = "temperature"
+thingName = "temperature"
+caPath = "VeriSign-Class 3-Public-Primary-Certification-Authority-G5.pem"
+keyPath = "febe95c28b-private.pem.key"
+certPath = "febe95c28b-certificate.pem.crt"
 
 mqttc.tls_set(caPath, certfile=certPath, keyfile=keyPath, cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1_2, ciphers=None)
 
