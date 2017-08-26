@@ -66,12 +66,13 @@ mqttc.connect(awshost, awsport, keepalive=60)
 mqttc.loop_start()
 
 while 1==1:
-    sleep(0.5)
-    response = table.query(
-        KeyConditionExpression=Key('Date').eq('20170825')) #FilterExpression=Attr('temperature').lt(30))
-        for i in response['Item']:
-        print(i['Date'], ":", i['Time'])
-        print(json.dumps(i, cls=DecimalEncoder))
-        items = response['Item']['Date']
-        print(i['Date'], ":", i['Time'])
+    sleep(100)
+    date_update = datetime.datetime.now().strftime("%Y%m%d")
+    time_update = datetime.datetime.now().strftime("%H:%M")
+    response = table.get_item(Key={'Date':date_update,'Time':time_update})
+    print(date_update)
+    print(time_update)
+    items = response['Item']['Temperature']
+
+
           
